@@ -6,8 +6,16 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Identity;
 using Oflow_app_Server.Providers;
 using Oflow_app_Server.Services.Base;
+using Oflow_app_Server.Services.Authentication;
+
+
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddHttpClient<AuthenticationServices>(client =>
+{
+    client.BaseAddress = new Uri("http://localhost:7003");
+});
 
 // Add services to the container.
 builder.Services.AddRazorPages();
@@ -17,7 +25,7 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddHttpClient<IClient, Client>(cl => cl.BaseAddress = new Uri("https://localhost:7003"));
 
 builder.Services.AddBlazoredLocalStorage();
-builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+builder.Services.AddScoped<Oflow_app_Server.Services.Authentication.IAuthenticationService, Oflow_app_Server.Services.Authentication.AuthenticationServices>();
 builder.Services.AddScoped<ApiAuthenticationStateProvider>();
 builder.Services.AddScoped<AuthenticationStateProvider>
           (p => p.GetRequiredService<ApiAuthenticationStateProvider>());   

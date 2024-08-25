@@ -1,6 +1,7 @@
 ﻿@page "/Users/login"
-@inject IAuthenticationService authService
 @inject NavigationManager navManager
+@inject IAuthenticationService authService
+
 <h3>Loginnt</h3>
 
 <div>
@@ -27,6 +28,7 @@
     </div>
 
 @code {
+   
     LoginUserDto LoginModel= new LoginUserDto();
     string message = string.Empty;
     public async Task HandleLogin()
