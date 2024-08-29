@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OFlow_Api", "WebApplication1\OFlow_Api.csproj", "{3CF01DD5-F54F-4567-A4D3-78D60FDE67F2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Oflow_app Server", "Oflow_app Server\Oflow_app Server.csproj", "{806C1C91-E59A-40CE-B964-30877F0A5B2C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3CF01DD5-F54F-4567-A4D3-78D60FDE67F2} = {3CF01DD5-F54F-4567-A4D3-78D60FDE67F2}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

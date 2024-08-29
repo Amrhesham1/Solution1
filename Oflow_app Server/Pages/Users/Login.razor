@@ -1,8 +1,8 @@
-﻿@page "/Users/login"
+﻿@page "/users/login"
 @inject NavigationManager navManager
 @inject IAuthenticationService authService
 
-<h3>Loginnt</h3>
+<h3>Login Page</h3>
 
 <div>
     <EditForm Model="LoginModel" OnValidSubmit="HandleLogin">
@@ -21,7 +21,7 @@
             <ValidationMessage For="@(() => LoginModel.Password)" />
         </div>
         <br/>
-        <button type="submit" class="btn btn-primary btn-block">Register</button>
+        <button type="submit" class="btn btn-primary btn-block">Login</button>
 
         
     </EditForm>

@@ -31,7 +31,7 @@ namespace OFlow_Api.Controllers
 
         // GET: api/Authors
         [HttpGet]
-        //[Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult<IEnumerable<Author>>> GetAuthors()
         {
 

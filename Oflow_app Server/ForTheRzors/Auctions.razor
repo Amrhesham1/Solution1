@@ -1,0 +1,40 @@
+﻿@page "/auctions"
+@using Microsoft.EntityFrameworkCore
+@using Oflow_app_Server.ActionReq
+@using Oflow_app_Server.Data
+@attribute [Authorize]
+@inject ApplicationDbContext DbContext
+
+
+<h3>Auctions</h3>
+
+<ul>
+    @if (auctions != null)
+    {
+        @foreach (var auction in auctions)
+        {
+            <li>@auction.ProductId - @auction.EndTime</li>
+        }
+    }
+    else
+    {
+        <li>No Auctions Available</li>
+    }
+</ul>
+
+@code {
+    public List<ActionReq.Auction> auctions;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            auctions = await DbContext.Auctions.ToListAsync();
+        }
+        catch (Exception ex)
+        {
+            // Handle exceptions, such as logging
+            Console.Error.WriteLine($"An error occurred while loading auctions: {ex.Message}");
+        }
+    }
+}

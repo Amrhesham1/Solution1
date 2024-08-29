@@ -1,0 +1,30 @@
+﻿@page "/CreateAuction"
+@using Oflow_app_Server.ActionReq
+@using Microsoft.EntityFrameworkCore
+@inject ApplicationDbContext DbContext
+@inject NavigationManager Nav
+
+<h3>Create Auction</h3>
+
+<EditForm Model="@newAuction" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <InputText id="title" @bind-Value="newAuction.Title" placeholder="Title" />
+    <InputText id="description" @bind-Value="newAuction.Description" placeholder="Description" />
+    <InputDate id="startTime" @bind-Value="newAuction.StartTime" />
+    <InputDate id="endTime" @bind-Value="newAuction.EndTime" />
+
+    <button type="submit">Create</button>
+</EditForm>
+
+@code {
+    private Auction newAuction = new Auction();
+
+    private async Task HandleValidSubmit()
+    {
+        DbContext.Auctions.Add(newAuction);
+        await DbContext.SaveChangesAsync();
+        Nav.NavigateTo("/auctions");
+    }
+}

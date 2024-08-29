@@ -1,0 +1,58 @@
+﻿@page "/auction/{id:int}"
+@using Microsoft.EntityFrameworkCore
+@using Oflow_app_Server.ActionReq
+
+@inject ApplicationDbContext DbContext
+@inject NavigationManager Navigation
+
+<h3>Auction Details</h3>
+
+<div>
+    <h4>@auction?.Title</h4>
+    <p>@auction?.Description</p>
+    <p>Current Highest Bid: @highestBid</p>
+
+    <EditForm Model="@newBid" OnValidSubmit="PlaceBid">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <InputNumber id="amount" @bind-Value="newBid.Amount" placeholder="Bid Amount" />
+        <button type="submit">Place Bid</button>
+    </EditForm>
+</div>
+
+@code {
+    [Parameter]
+    public int id { get; set; }
+
+    private Auction auction;
+    private Bid newBid = new Bid();
+    private decimal highestBid;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (id != 0)
+        {
+            auction = await DbContext.Auctions
+                .Include(a => a.Bids)
+                .FirstOrDefaultAsync(a => a.AuctionId == id);
+
+            if (auction != null)
+            {
+                highestBid = auction.Bids.OrderByDescending(b => b.Amount).FirstOrDefault()?.Amount ?? 0;
+            }
+        }
+    }
+
+    private async Task PlaceBid()
+    {
+        if (auction != null)
+        {
+            newBid.AuctionId = auction.AuctionId;
+            newBid.BidTime = DateTime.Now;
+            newBid.UserId = id/* get current user id */; // Ensure you fetch the cSurrent user ID properly
+            DbContext.Bids.Add(newBid);
+            await DbContext.SaveChangesAsync();
+            Navigation.NavigateTo("/auctions");
+        }
+    }
+}

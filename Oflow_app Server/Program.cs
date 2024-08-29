@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Identity;
 using Oflow_app_Server.Providers;
 using Oflow_app_Server.Services.Base;
 using Oflow_app_Server.Services.Authentication;
+using Microsoft.EntityFrameworkCore;
+using Oflow_app_Server.ActionReq;
+using Oflow_app_Server.Data;
 
 
 
@@ -18,6 +21,16 @@ builder.Services.AddHttpClient<AuthenticationServices>(client =>
 });
 
 // Add services to the container.
+
+builder.Services.AddScoped<Oflow_app_Server.ActionReq.AuctionService>();
+builder.Services.AddAuthorizationCore();
+// builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
+
+
+// Program.cs (Blazor WebAssembly) Added BY Mayaaaa
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
@@ -29,6 +42,7 @@ builder.Services.AddScoped<Oflow_app_Server.Services.Authentication.IAuthenticat
 builder.Services.AddScoped<ApiAuthenticationStateProvider>();
 builder.Services.AddScoped<AuthenticationStateProvider>
           (p => p.GetRequiredService<ApiAuthenticationStateProvider>());   
+
 
 var app = builder.Build();
 

@@ -46,11 +46,11 @@
 
 @code {
     UserDto RegistrationModel = new UserDto{ 
-    Role = "User"
+    Role = "Administrator"
 };
     String message = string.Empty;
     private async Task HandleRegistration()
-    {
+   {
 
         try
         {
@@ -74,4 +74,4 @@
     {
         navManager.NavigateTo("/Users/login");
     }
-}
+}}
